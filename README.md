@@ -1,28 +1,25 @@
 ## resistance-pipeline
-Pipeline for species-specific antibiotic resistance annotation
+Pipeline for species-specific antibiotic resistance annotation <br />
 
 ### Inputs
-species:
-Staphylococcus aureus --> saureus
-Enterococcus faecium  --> efaecium
-Enterococcus faecalis --> efaecalis
-  
-fasta file:
-contigs or whole genome fasta file
+Species:  <br />
+Staphylococcus aureus --> saureus  <br />
+Enterococcus faecium  --> efaecium  <br />
+Enterococcus faecalis --> efaecalis  <br />
+  <br />
+fasta file:  <br />
+contigs or whole genome fasta file  <br />
   
 ### Required Modules
-prokka
-rnammer
-NucDIFF
-annovar
-samtools
-blast
-python
+prokka  <br />
+rnammer  <br />
+blast  <br />
+python  <br />
 
 ### Running the pipeline
-Example: ./scripts/resistance_pipeline.sh [species] [fasta file]
+Example: ./scripts/resistance_pipeline.sh [species] [fasta file]  <br />
 
 ### Pipeline Description
-The annotation considers homologous genes (presence / absence), variants and rRNA variants
-Gene database and gene Key is with Kieran.
+The annotation considers homologous genes (presence / absence), variants and rRNA variants  <br />
+Gene database and gene Key is with Kieran.  <br />
 
