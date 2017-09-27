@@ -33,7 +33,7 @@ module load signalp/4.1
 # Check if database exists
 if [ ! -d "database" ]
 then
-    echo "Database directory does not exist"
+    echo "Error: Database directory does not exist"
     exit 1
 fi
 
@@ -46,14 +46,14 @@ fi
 # Check if species is provided
 if [ -z ${1+x} ]
 then
-    echo "Species input not provided: efaecium or efaecalis"
+    echo "Error: Species input not provided: efaecium or efaecalis"
     exit 1
 fi
 
 # Check if species is provided
 if [ -z ${2+x} ]
 then
-    echo "Fasta file not provided."
+    echo "Error: Fasta file not provided. abxr_annotation_pipeline.sh [species] [fasta]"
     exit 1
 fi
 
@@ -65,10 +65,12 @@ fi
 # Set species variable
 if [ ${1} = "efaecium" ]
 then
+    echo -e "\n...Species set as Enterococcus faecium\n"
     species="Ef1"
 
 elif [${1} = "efaecalis"]
 then
+    echo -e "\n...Species set as Enterococcus faecalis\n"
     species="Ef2"
 
 fi
@@ -86,29 +88,28 @@ mkdir   "./tmp-files/homolog"
 mkdir   "./tmp-files/variant"
 mkdir   "./tmp-files/rRNA"
 mkdir   "./tmp-files/blastdb"
-mkdir   "./tmp-files/nucdiff"
 
 # Split database files
 cp ./database/${species}-*-Ac-Re*.faa ./tmp-files/homolog
-cp ./database/${species}-*-Va-Su*.fna ./tmp-files/variant
+cp ./database/${species}-*-Va-Su*.faa ./tmp-files/variant
 
 cat ./tmp-files/homolog/*.faa >> ./tmp-files/blastdb/homolog.faa
-cat ./tmp-files/variant/*.fna >> ./tmp-files/blastdb/variant.fna
+cat ./tmp-files/variant/*.faa >> ./tmp-files/blastdb/variant.faa
 
 ##############
 # Prokka
 ##############
 
 # Check if database exists
-echo "Checking if prokka annotation exists"
-if [ ! -d "./tmp-files/prokka" ]
+echo -e "\n...Checking if prokka annotation exists"
+if [ ! -d "./prokka" ]
 
 then
-    echo "Prokka annotation doesn't exist...Running Prokka"
-    prokka --outdir ./tmp-files/prokka --force --quiet --prefix prokka ${fasta}
+    echo -e "\n...Prokka annotation doesn't exist. Running Prokka now. \n"
+    prokka --outdir ./prokka --force --quiet --prefix prokka ${fasta}
 
-elif
-    echo "Prokka exists...skipping annotation"
+else
+    echo -e "\n...Prokka exists. Skipping Prokka annotation. \n"
 
 fi
 
@@ -116,9 +117,6 @@ fi
 # rRNA
 ##############
 
-echo "...Running rnammer"
+echo -e "\n...Running rnammer. \n"
 rnammer -S bac -m 'lsu' -f "prokka.23SrRNA" ${fasta}
 mv "prokka.23SrRNA" "./tmp-files/rRNA"
-
-
-
