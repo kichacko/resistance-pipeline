@@ -1,19 +1,18 @@
 #!/bin/sh
 
-#  resistance_pipeline.sh
+#  abxr_annotation_pipeline.sh
 #  
 #
 #  Created by Kieran Chacko on 9/20/17.
 #
-#
-# This script runs the pipeline. Provide the species (eg. efaecium) and the path to the fasta file
 
 ##############
-# Input
+# Load Modules
 ##############
 
-# 1: Species
-# 2: Fasta file
+module purge
+module load python
+module load py_packages
 
 ##############
 # Scripts
@@ -25,13 +24,13 @@
 # Run Blast
 ./scripts/run_blast.sh
 
-# Call Variants
-./scripts/run_blast.sh
+# Combined outputs
+python ./scripts/match_variants.py
+python ./scripts/final_output.py
 
 ##############
 # Cleaning
 ##############
 
-rm -r ./tmp
-
-
+mv ./out/output.txt ./out/"${3}-Resistance-Profile.txt"
+rm -r ./tmp-files
