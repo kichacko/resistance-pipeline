@@ -11,8 +11,12 @@ import pandas as pd
 import sys
 import os
 
+# Load arguments
+firstarg=sys.argv[1]
+seconarg=sys.argv[2]
+
 # Load variant.nucdiff
-df = pd.read_csv('./tmp-files/variant/variant.blastvar',
+df = pd.read_csv('./' + str(seconarg) + '/tmp-files/' + str(firstarg) + '/' + str(firstarg) + '.blastvar',
                  sep = "\t",
                  header = None)
 
@@ -35,5 +39,4 @@ df2.columns = [
 
 df = pd.merge(df, df2, on=['ID', 'Codon'], how='inner')
 df = df.loc[:, ['ID','Contig','Codon']]
-df.to_csv('./tmp-files/variant/variant.var', sep='\t', index=False, header=False)
-
+df.to_csv('./' + str(seconarg) + '/tmp-files/' + str(firstarg) + '/' + str(firstarg) + '.var', sep='\t', index=False, header=False)
