@@ -19,18 +19,18 @@ module load py_packages
 ##############
 
 # Run file setup
-./scripts/file_setup.sh ${1} ${2}
+./scripts/file_setup.sh ${1} ${2} ${3}
 
 # Run Blast
-./scripts/run_blast.sh
+./scripts/run_blast.sh ${3}
 
 # Combined outputs
-python ./scripts/match_variants.py
-python ./scripts/final_output.py
+python ./scripts/match_variants.py variant ${3}
+python ./scripts/match_variants.py rRNA ${3}
+python ./scripts/final_output.py ${3}
 
 ##############
 # Cleaning
 ##############
 
-mv ./out/output.txt ./out/"${3}-Resistance-Profile.txt"
-rm -r ./tmp-files
+rm -r ./${3}/tmp-files
