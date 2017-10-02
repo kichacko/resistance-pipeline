@@ -12,6 +12,7 @@
 
 # 1: Species
 # 2: Fasta file
+# 3: Prefix
 
 ##############
 # Load Modules
@@ -37,12 +38,6 @@ then
     exit 1
 fi
 
-# Check if out exists
-if [ ! -d "out" ]
-then
-    mkdir "out"
-fi
-
 # Check if species is provided
 if [ -z ${1+x} ]
 then
@@ -50,13 +45,19 @@ then
     exit 1
 fi
 
-# Check if species is provided
+# Check if FASTA is provided
 if [ -z ${2+x} ]
 then
-    echo "Error: Fasta file not provided. abxr_annotation_pipeline.sh [species] [fasta]"
+    echo "Error: Fasta file not provided. abxr_annotation_pipeline.sh [species] [fasta] [prefix]"
     exit 1
 fi
 
+# Check if prefix is provided
+if [ -z ${3+x} ]
+then
+    echo "Error: Prefix not provided. abxr_annotation_pipeline.sh [species] [fasta] [prefix]"
+    exit 1
+fi
 
 ##############
 # Set variables
@@ -78,23 +79,30 @@ fi
 # Set fasta variable
 fasta=${2}
 
+# Set prefix variable
+prefix=${3}
+
 ##############
 # Set environment
 ##############
 
 # Create directories
-mkdir   "tmp-files"
-mkdir   "./tmp-files/homolog"
-mkdir   "./tmp-files/variant"
-mkdir   "./tmp-files/rRNA"
-mkdir   "./tmp-files/blastdb"
+mkdir   "./${prefix}"
+mkdir   "./${prefix}/out/"
+mkdir   "./${prefix}/tmp-files"
+mkdir   "./${prefix}/tmp-files/homolog"
+mkdir   "./${prefix}/tmp-files/variant"
+mkdir   "./${prefix}/tmp-files/rRNA"
+mkdir   "./${prefix}/tmp-files/blastdb"
 
 # Split database files
-cp ./database/${species}-*-Ac-Re*.faa ./tmp-files/homolog
-cp ./database/${species}-*-Va-Su*.faa ./tmp-files/variant
+cp ./database/${species}-*-Ac-Re*.faa      "./${prefix}/tmp-files/homolog"
+cp ./database/${species}-*-Va-Su*.faa      "./${prefix}/tmp-files/variant"
+cp ./database/${species}-*-*rRNA*.fna  "./${prefix}/tmp-files/rRNA"
 
-cat ./tmp-files/homolog/*.faa >> ./tmp-files/blastdb/homolog.faa
-cat ./tmp-files/variant/*.faa >> ./tmp-files/blastdb/variant.faa
+cat ./${prefix}/tmp-files/homolog/*.faa >> "./${prefix}/tmp-files/blastdb/homolog.faa"
+cat ./${prefix}/tmp-files/variant/*.faa >> "./${prefix}/tmp-files/blastdb/variant.faa"
+cat ./${prefix}/tmp-files/rRNA/*.fna >>    "./${prefix}/tmp-files/blastdb/rRNA.fna"
 
 ##############
 # Prokka
@@ -102,11 +110,11 @@ cat ./tmp-files/variant/*.faa >> ./tmp-files/blastdb/variant.faa
 
 # Check if database exists
 echo -e "\n...Checking if prokka annotation exists"
-if [ ! -d "./prokka" ]
+if [ ! -d "./${prefix}/prokka" ]
 
 then
     echo -e "\n...Prokka annotation doesn't exist. Running Prokka now. \n"
-    prokka --outdir ./prokka --force --quiet --prefix prokka ${fasta}
+    prokka --outdir ./${prefix}/prokka --force --quiet --prefix prokka ${fasta}
 
 else
     echo -e "\n...Prokka exists. Skipping Prokka annotation. \n"
@@ -118,5 +126,5 @@ fi
 ##############
 
 echo -e "\n...Running rnammer. \n"
-rnammer -S bac -m 'lsu' -f "prokka.23SrRNA" ${fasta}
-mv "prokka.23SrRNA" "./tmp-files/rRNA"
+rnammer -S bac -m 'lsu' -f "prokka.rRNA" ${fasta}
+mv "prokka.rRNA" "./${prefix}/prokka/"
