@@ -13,6 +13,13 @@
 # 1: fasta file
 
 ##############
+# Set variables
+##############
+
+# Set prefix variable
+prefix=${1}
+
+##############
 # Load Modules
 ##############
 
@@ -26,40 +33,49 @@ module load py_packages
 ##############
 
 echo -e "\n...Making Blast database for homologs. \n"
-makeblastdb -dbtype 'prot' -in "./tmp-files/blastdb/homolog.faa" -input_type 'fasta' -out "./tmp-files/blastdb/homolog"
+makeblastdb -dbtype 'prot' -in "./${prefix}/tmp-files/blastdb/homolog.faa" -input_type 'fasta' -out "./${prefix}/tmp-files/blastdb/homolog"
 
 echo -e "\n...Running Blast for homologs. \n"
-blastp -db "./tmp-files/blastdb/homolog" -query "./prokka/prokka.faa" -outfmt 6 -max_target_seqs 1 -out "./tmp-files/homolog/homolog.blast"
+blastp -db "./${prefix}/tmp-files/blastdb/homolog" -query "./${prefix}/prokka/prokka.faa" -outfmt 6 -max_target_seqs 1 -out "./${prefix}/tmp-files/homolog/homolog.blast"
 
 echo -e "\n...Cleaning Blast Result. \n"
-python ./scripts/clean-blast.py homolog
+python ./scripts/clean-blast.py homolog ${prefix}
 
 ##############
 # Variant
 ##############
 
 echo -e "\n...Making Blast database for variants. \n"
-makeblastdb -dbtype 'prot' -in "./tmp-files/blastdb/variant.faa"  -input_type 'fasta' -out "./tmp-files/blastdb/variant"
+makeblastdb -dbtype 'prot' -in "./${prefix}/tmp-files/blastdb/variant.faa"  -input_type 'fasta' -out "./${prefix}/tmp-files/blastdb/variant"
 
 echo -e "\n...Running Blast for variants. \n"
-blastp -db "./tmp-files/blastdb/variant" -query "./prokka/prokka.faa" -outfmt 6 -max_target_seqs 1 -out "./tmp-files/variant/variant.blast"
+blastp -db "./${prefix}/tmp-files/blastdb/variant" -query "./${prefix}/prokka/prokka.faa" -outfmt 6 -max_target_seqs 1 -out "./${prefix}/tmp-files/variant/variant.blast"
 
 echo -e "\n...Cleaning Blast Result. \n"
-python ./scripts/clean-blast.py variant
-# Output = .hits
+python ./scripts/clean-blast.py variant ${prefix}
 
 echo -e "\n...Finding variants from Blast. \n"
 while read i j k
 do
 
-    python ./scripts/extract_seqs.py "${j}"
-# Output = PROKKA.faa
-    blastp -subject "./tmp-files/variant/${i}.faa" -query "./tmp-files/variant/${j}.faa" -outfmt 5 -out "./tmp-files/variant/${i}.blast"
-# OUTPUT = Ef1.blast
-    python ./scripts/extract_blast_var.py "./tmp-files/variant/${i}.blast"
-# OUTPUT = Ef1.out
+python ./scripts/extract_seqs.py "${j}" variant "${prefix}"
+blastp -subject "./${prefix}/tmp-files/variant/${i}.faa" -query "./${prefix}/tmp-files/variant/${j}.faa" -outfmt 5 -out "./${prefix}/tmp-files/variant/${i}.blast"
+python ./scripts/extract_blast_var.py "./${prefix}/tmp-files/variant/${i}.blast" variant "${prefix}"
 
+done <  "./${prefix}/tmp-files/variant/variant.hits"
 
-done <  "./tmp-files/variant/variant.hits"
+cat "./${prefix}/tmp-files/variant/"*.out >> "./${prefix}/tmp-files/variant/variant.blastvar"
 
-cat "./tmp-files/variant/"*.out >> "./tmp-files/variant/variant.blastvar"
+##############
+# rRNA
+##############
+
+echo -e "\n...Making Blast database for rRNA. \n"
+makeblastdb -dbtype 'nucl' -in "./${prefix}/tmp-files/blastdb/rRNA.fna"  -input_type 'fasta' -out "./${prefix}/tmp-files/blastdb/rRNA"
+
+echo -e "\n...Running Blast for variants. \n"
+blastn -db "./${prefix}/tmp-files/blastdb/rRNA" -query "./${prefix}/prokka/prokka.rRNA" -outfmt 5 -out "./${prefix}/tmp-files/rRNA/rRNA.blast"
+
+python ./scripts/extract_blast_var.py "./${prefix}/tmp-files/rRNA/rRNA.blast" rRNA "${prefix}"
+
+cat "./${prefix}/tmp-files/rRNA/"*.out >> "./${prefix}/tmp-files/rRNA/rRNA.blastvar"
