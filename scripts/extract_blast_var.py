@@ -22,6 +22,9 @@ thirdarg=sys.argv[3]
 result_handle = open(firstarg)
 blast_records = NCBIXML.parse(result_handle)
 
+# Ensure there is an empty file in case there are no rRNA variants
+output = open('./' + str(thirdarg) + '/tmp-files/' + str(seconarg) + '/empty.out', "w")
+
 for records in blast_records:
     for alignment in records.alignments:
     
