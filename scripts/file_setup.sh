@@ -64,12 +64,12 @@ fi
 ##############
 
 # Set species variable
-if [ ${1} = "efaecium" ]
+if [ ${1} == "efaecium" ]
 then
     echo -e "\n...Species set as Enterococcus faecium\n"
     species="Ef1"
 
-elif [${1} = "efaecalis"]
+elif [ ${1} == "efaecalis" ]
 then
     echo -e "\n...Species set as Enterococcus faecalis\n"
     species="Ef2"
