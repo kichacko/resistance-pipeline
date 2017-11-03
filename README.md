@@ -1,11 +1,14 @@
 **resistance-pipeline**<br />
 Pipeline for species-specific antibiotic resistance gene annotation <br />
+
 The annotation considers homologous genes (presence / absence), variants in converved genes, and variants rRNA genes.  <br />
 The following species and antibiotics are currently supported: <br />
+
 Species <br />
   * Enterococcus faecium
   * Enterococcus faecalis
   * Staphylococcus aureus
+
 Antibiotics <br />
   * Erythromycin
   * Clindamycin
