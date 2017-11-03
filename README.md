@@ -1,15 +1,16 @@
-**resistance-pipeline**<br />
-Pipeline for species-specific antibiotic resistance gene annotation <br />
+## **resistance-pipeline**<br />
+Pipeline for species-specific antibiotic resistance gene annotation. <br />
 
 The annotation considers homologous genes (presence / absence), variants in converved genes, and variants rRNA genes.  <br />
+
 The following species and antibiotics are currently supported: <br />
 
-Species <br />
+Species: <br />
   * Enterococcus faecium
   * Enterococcus faecalis
   * Staphylococcus aureus
 
-Antibiotics <br />
+Antibiotics: <br />
   * Erythromycin
   * Clindamycin
   * Quinupristin / dalfopristin
@@ -32,6 +33,7 @@ The list of antibiotic resistance genes and variants were identified in literatu
 
 **Usage**
 ./scripts/resistance_pipeline.sh [species] [fasta file] [prefix]  <br />
+
 Species:
   * Enterococcus faecium = efaecium
   * Enterococcus faecalis = efaecalis
