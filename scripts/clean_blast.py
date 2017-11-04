@@ -40,7 +40,7 @@ df.columns = [
 df = df.sort_values(by = ['Percent_ID'])
 df = df.loc[df['Percent_ID'] >= 90]
 df = df.loc[df['E_Value'] <= 1e-10]
-df = df.drop_duplicates(subset = ['ID'], keep = 'last')
+df = df.drop_duplicates(subset = ['Contig'], keep = 'last')
 
 
 if firstarg == "homolog":
