@@ -46,7 +46,7 @@ Fasta:
 Prefix:
   * Name of output file
   
-**Required Modules**
+**Required Modules** <br />
 prokka  <br />
 rnammer  <br />
 blast  <br />
