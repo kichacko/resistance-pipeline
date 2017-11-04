@@ -6,9 +6,10 @@ The annotation considers homologous genes (presence / absence), variants in conv
 The following species and antibiotics are currently supported: <br />
 
 Species: <br />
-  * Enterococcus faecium
-  * Enterococcus faecalis
+  * Enterococcus faecium (Enterococcus faecium DO)
+  * Enterococcus faecalis (Enterococcus faecalis V583)
   * Staphylococcus aureus
+  * Pseudomonas aeruginosa (Pseudomonas aeruginosa PAO1)
 
 Antibiotics: <br />
   * Erythromycin
