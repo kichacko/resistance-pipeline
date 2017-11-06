@@ -14,6 +14,13 @@ module purge
 module load python
 module load py_packages
 
+
+##############
+# Start Message
+##############
+
+echo -e "\n...Running resistance-pipeline on ${2}. \n"
+
 ##############
 # Scripts
 ##############
