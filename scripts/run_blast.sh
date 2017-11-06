@@ -36,7 +36,7 @@ echo -e "\n...Making Blast database for homologs. \n"
 makeblastdb -dbtype 'prot' -in "./${prefix}/tmp-files/blastdb/homolog.faa" -input_type 'fasta' -out "./${prefix}/tmp-files/blastdb/homolog"
 
 echo -e "\n...Running Blast for homologs. \n"
-blastp -db "./${prefix}/tmp-files/blastdb/homolog" -query "./${prefix}/prokka/prokka.faa" -outfmt 6 -max_target_seqs 1 -out "./${prefix}/tmp-files/homolog/homolog.blast"
+blastp -db "./${prefix}/tmp-files/blastdb/homolog" -query "./${prefix}/prokka/prokka.faa" -outfmt 6 -out "./${prefix}/tmp-files/homolog/homolog.blast"
 
 echo -e "\n...Cleaning Blast Result. \n"
 python ./scripts/clean-blast.py homolog ${prefix}
