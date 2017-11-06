@@ -1,0 +1,5 @@
+List of tasks to do:
+ * Fix all accession numbers for Ef1 and Ef2
+ * Check referecenome genomes for all species
+ * Build "Delete" pathway in the pipeline
+ * Convert script to fuctions
