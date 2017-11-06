@@ -33,7 +33,7 @@ module load py_packages
 ##############
 
 echo -e "\n...Making Blast database for homologs. \n"
-makeblastdb -dbtype 'prot' -in "./${prefix}/tmp-files/blastdb/homolog.faa" -input_type 'fasta' -out "./${prefix}/tmp-files/blastdb/homolog"
+makeblastdb -dbtype 'prot' -in "./${prefix}/tmp-files/blastdb/homolog.faa" -input_type 'fasta' -out "./${prefix}/tmp-files/blastdb/homolog" > "./${prefix}/tmp-files/blastdb/blast_log.txt"
 
 echo -e "\n...Running Blast for homologs. \n"
 blastp -db "./${prefix}/tmp-files/blastdb/homolog" -query "./${prefix}/prokka/prokka.faa" -outfmt 6 -out "./${prefix}/tmp-files/homolog/homolog.blast"
@@ -46,7 +46,7 @@ python ./scripts/clean-blast.py homolog ${prefix}
 ##############
 
 echo -e "\n...Making Blast database for variants. \n"
-makeblastdb -dbtype 'prot' -in "./${prefix}/tmp-files/blastdb/variant.faa"  -input_type 'fasta' -out "./${prefix}/tmp-files/blastdb/variant"
+makeblastdb -dbtype 'prot' -in "./${prefix}/tmp-files/blastdb/variant.faa"  -input_type 'fasta' -out "./${prefix}/tmp-files/blastdb/variant" > "./${prefix}/tmp-files/blastdb/blast_log.txt"
 
 echo -e "\n...Running Blast for variants. \n"
 blastp -db "./${prefix}/tmp-files/blastdb/variant" -query "./${prefix}/prokka/prokka.faa" -outfmt 6 -max_target_seqs 1 -out "./${prefix}/tmp-files/variant/variant.blast"
@@ -71,7 +71,7 @@ cat "./${prefix}/tmp-files/variant/"*.out >> "./${prefix}/tmp-files/variant/vari
 ##############
 
 echo -e "\n...Making Blast database for rRNA. \n"
-makeblastdb -dbtype 'nucl' -in "./${prefix}/tmp-files/blastdb/rRNA.fna"  -input_type 'fasta' -out "./${prefix}/tmp-files/blastdb/rRNA"
+makeblastdb -dbtype 'nucl' -in "./${prefix}/tmp-files/blastdb/rRNA.fna"  -input_type 'fasta' -out "./${prefix}/tmp-files/blastdb/rRNA" > "./${prefix}/tmp-files/blastdb/blast_log.txt"
 
 echo -e "\n...Running Blast for variants. \n"
 blastn -db "./${prefix}/tmp-files/blastdb/rRNA" -query "./${prefix}/prokka/prokka.rRNA" -outfmt 5 -out "./${prefix}/tmp-files/rRNA/rRNA.blast"
