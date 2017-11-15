@@ -58,7 +58,7 @@ echo -e "\n...Finding variants from Blast. \n"
 while read i j k
 do
 
-python ./scripts/extract_seqs.py "${j}" variant "${prefix}"
+python ./scripts/extract_seq.py "${j}" variant "${prefix}"
 blastp -subject "./${prefix}/tmp-files/variant/${i}.faa" -query "./${prefix}/tmp-files/variant/${j}.faa" -outfmt 5 -out "./${prefix}/tmp-files/variant/${i}.blast"
 python ./scripts/extract_blast_var.py "./${prefix}/tmp-files/variant/${i}.blast" variant "${prefix}"
 
