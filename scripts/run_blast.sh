@@ -39,7 +39,7 @@ echo -e "\n...Running Blast for homologs. \n"
 blastp -db "./${prefix}/tmp-files/blastdb/homolog" -query "./${prefix}/prokka/prokka.faa" -outfmt 6 -out "./${prefix}/tmp-files/homolog/homolog.blast"
 
 echo -e "\n...Cleaning Blast Result. \n"
-python ./scripts/clean-blast.py homolog ${prefix}
+python ./scripts/clean_blast.py homolog ${prefix}
 
 ##############
 # Variant
@@ -52,7 +52,7 @@ echo -e "\n...Running Blast for variants. \n"
 blastp -db "./${prefix}/tmp-files/blastdb/variant" -query "./${prefix}/prokka/prokka.faa" -outfmt 6 -max_target_seqs 1 -out "./${prefix}/tmp-files/variant/variant.blast"
 
 echo -e "\n...Cleaning Blast Result. \n"
-python ./scripts/clean-blast.py variant ${prefix}
+python ./scripts/clean_blast.py variant ${prefix}
 
 echo -e "\n...Finding variants from Blast. \n"
 while read i j k
