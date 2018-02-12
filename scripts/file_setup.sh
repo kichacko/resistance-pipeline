@@ -73,6 +73,17 @@ elif [ ${1} == "efaecalis" ]
 then
     echo -e "\n...Species set as Enterococcus faecalis\n"
     species="Ef2"
+    
+elif [ ${1} == "paeruginosa" ]
+then
+    echo -e "\n...Species set as Pseudomonas aeruginosa\n"
+    species="Pa1"
+
+
+elif [ ${1} == "saureus" ]
+then
+    echo -e "\n...Species set as Staphylococcus aureus\n"
+    species="Sa1"
 
 fi
 
