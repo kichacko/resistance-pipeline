@@ -49,7 +49,7 @@ echo -e "\n...Making Blast database for variants. \n"
 makeblastdb -dbtype 'prot' -in "./${prefix}/tmp-files/blastdb/variant.faa"  -input_type 'fasta' -out "./${prefix}/tmp-files/blastdb/variant" > "./${prefix}/tmp-files/blastdb/blast_log.txt"
 
 echo -e "\n...Running Blast for variants. \n"
-blastp -db "./${prefix}/tmp-files/blastdb/variant" -query "./${prefix}/prokka/prokka.faa" -outfmt 6 -max_target_seqs 1 -out "./${prefix}/tmp-files/variant/variant.blast"
+blastp -db "./${prefix}/tmp-files/blastdb/variant" -query "./${prefix}/prokka/prokka.faa" -outfmt 6 -out "./${prefix}/tmp-files/variant/variant.blast"
 
 echo -e "\n...Cleaning Blast Result. \n"
 python ./scripts/clean_blast.py variant ${prefix}
