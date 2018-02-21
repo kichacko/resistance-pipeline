@@ -27,8 +27,7 @@ df.columns = [
               "Percent_ID",
               "Aligned_Length",
               "Subject_Length",
-              "E_Value",
-              "Bitscore"
+              "E_Value"
               ]
 
 # Calculate the % of the sequence that aligned, and filter results based on Percent_Aligned, Percent_ID and E_value
