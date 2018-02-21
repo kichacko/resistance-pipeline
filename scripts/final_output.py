@@ -45,7 +45,8 @@ output = pd.concat([df, df2, df3], ignore_index = True)
 output.columns = [
                   "ID",
                   "Contig",
-                  "Variant_Type"
+                  "Variant_Type",
+                  "Percent_Aligned"
                   ]
 
-output.to_csv('./' + str(firstarg) + '/out/' + str(firstarg) + '.txt', sep='\t', index=False)
+output.to_csv('./' + str(firstarg) + '/out/' + str(firstarg) + '.txt', sep='\t', index=True)
