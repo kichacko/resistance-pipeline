@@ -41,3 +41,10 @@ python ./scripts/final_output.py ${3}
 ##############
 
 rm -r ./${3}/tmp-files
+
+##############
+# End Message
+##############
+
+echo -e "\n...resistance-pipeline Complete. \n"
+echo -e "\n...Author: Kieran Chacko. \n"
