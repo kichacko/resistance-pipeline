@@ -25,32 +25,29 @@ df.columns = [
               "Contig",
               "ID",
               "Percent_ID",
-              "Length",
-              "Mismatch",
-              "Gap_Open",
-              "Query_Start",
-              "Query_End",
-              "Subject_Start",
-              "Subject_End",
+              "Aligned_Length",
+              "Subject_Length",
               "E_Value",
               "Bitscore"
               ]
 
-# Sort the data by percent identity
+# Calculate the % of the sequence that aligned, and filter results based on Percent_Aligned, Percent_ID and E_value
 df = df.sort_values(by = ['Percent_ID'])
+df['Percent_Aligned'] = df['Aligned_Length'] / df['Subject_Length']
 df = df.loc[df['Percent_ID'] >= 90]
 df = df.loc[df['E_Value'] <= 1e-10]
+df = df.loc[df['Percent_Aligned'] >= 0.90]
 df = df.drop_duplicates(subset = ['ID', 'Contig'], keep = 'last')
 
-
+# Write outputs
 if firstarg == "homolog":
-    df = df.loc[:, ['ID', 'Contig', 'Percent_ID']]
+    df = df.loc[:, ['ID', 'Contig', 'Percent_ID', 'Percent_Aligned']]
     df.to_csv('./'  + str(seconarg) + '/tmp-files/homolog/' +str(firstarg) + '.hom', sep='\t', index=False, header=False)
 
 elif firstarg == "variant":
-    df = df.loc[:, ['ID', 'Contig']]
+    df = df.loc[:, ['ID', 'Contig', 'Percent_ID', 'Percent_Aligned']]
     df.to_csv('./' + str(seconarg) + '/tmp-files/variant/' +str(firstarg) + '.hits', sep='\t', index=False, header=False)
 
 elif firstarg == "rRNA":
-    df = df.loc[:, ['ID', 'Contig']]
+    df = df.loc[:, ['ID', 'Contig', 'Percent_ID', 'Percent_Aligned']]
     df.to_csv('./' + str(seconarg) + '/tmp-files/rRNA/' +str(firstarg) + '.hits', sep='\t', index=False, header=False)
