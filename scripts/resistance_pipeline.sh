@@ -32,6 +32,7 @@ echo -e "\n...Running resistance-pipeline on ${2}. \n"
 ./scripts/run_blast.sh ${3}
 
 # Combined outputs
+python ./scripts/clean_gff.py ${3}
 python ./scripts/match_variants.py variant ${3}
 python ./scripts/match_variants.py rRNA ${3}
 python ./scripts/final_output.py ${3}
