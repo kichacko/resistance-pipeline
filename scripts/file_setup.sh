@@ -136,6 +136,15 @@ fi
 # rRNA
 ##############
 
-echo -e "\n...Running rnammer. \n"
-rnammer -S bac -m 'lsu' -f "prokka.rRNA" ${fasta}
-mv "prokka.rRNA" "./${prefix}/prokka/"
+echo -e "\n...Checking if rRNA annotation exists"
+if [ ! -f "./${prefix}/prokka/prokka.rRNA" ]
+
+then
+    echo -e "\n...rRNA annotation doesn't exist. Running rnammer now. \n"
+    rnammer -S bac -m 'lsu' -f "prokka.rRNA" ${fasta}
+    mv "prokka.rRNA" "./${prefix}/prokka/"
+
+else
+    echo -e "\n...prokka.rRNA exists. Skipping rRNA annotation. \n"
+
+fi
