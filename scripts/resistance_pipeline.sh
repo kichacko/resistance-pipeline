@@ -38,12 +38,6 @@ python ./scripts/match_variants.py rRNA ${3}
 python ./scripts/final_output.py ${3}
 
 ##############
-# Cleaning
-##############
-
-rm -r ./${3}/tmp-files
-
-##############
 # End Message
 ##############
 
